@@ -3,7 +3,6 @@
   <bpmn2:itemDefinition id="ItemDefinition_CheckoutRequest" structureRef="com.example.checkout.model.CheckoutRequest" />
   <bpmn2:itemDefinition id="ItemDefinition_Boolean" structureRef="java.lang.Boolean" />
   <bpmn2:itemDefinition id="ItemDefinition_String" structureRef="java.lang.String" />
-  <bpmn2:itemDefinition id="_29080162-DEE1-49C0-AE52-9A17A0FF4A36" structureRef="String" />
   <bpmn2:interface id="Interface_CartService" name="com.example.checkout.service.CartService" implementationRef="com.example.checkout.service.CartService">
     <bpmn2:operation id="Operation_ValidateCart" name="validateCart" implementationRef="validateCart" />
   </bpmn2:interface>
@@ -26,13 +25,13 @@
     <bpmn2:operation id="Operation_PaymentFailure" name="handlePaymentFailure" implementationRef="handlePaymentFailure" />
     <bpmn2:operation id="Operation_CompleteCheckout" name="completeCheckout" implementationRef="completeCheckout" />
   </bpmn2:interface>
-  <bpmn2:process id="Process_Checkout" name="Marketplace Checkout" isExecutable="true" processType="Private">
+  <bpmn2:process id="Process_Checkout" name="Marketplace Checkout" isExecutable="true" processType="Public">
     <bpmn2:property id="Property_Request" name="request" itemSubjectRef="ItemDefinition_CheckoutRequest" />
     <bpmn2:property id="Property_CartValid" name="cartValid" itemSubjectRef="ItemDefinition_Boolean" />
     <bpmn2:property id="Property_StockAvailable" name="stockAvailable" itemSubjectRef="ItemDefinition_Boolean" />
     <bpmn2:property id="Property_PaymentSuccessful" name="paymentSuccessful" itemSubjectRef="ItemDefinition_Boolean" />
     <bpmn2:property id="Property_OrderId" name="orderId" itemSubjectRef="ItemDefinition_String" />
-    <bpmn2:startEvent id="StartEvent_Checkout">
+    <bpmn2:startEvent id="StartEvent_Checkout" name="Checkout Request">
       <bpmn2:outgoing>
                 Flow_Start_ValidateCart
             </bpmn2:outgoing>
@@ -94,7 +93,6 @@
       <bpmn2:incoming>
                 Flow_Start_ValidateCart
             </bpmn2:incoming>
-      <bpmn2:incoming>_F8C6B66F-C6B8-4709-953F-AEBCFD731C10</bpmn2:incoming>
       <bpmn2:outgoing>
                 Flow_ValidateCart_Gateway
             </bpmn2:outgoing>
@@ -478,15 +476,6 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Shape_EndEvent_Completed" bpmnElement="EndEvent_Completed">
         <dc:Bounds x="1710" y="302" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_59206A54-BF6F-41D3-825D-A6C4741F41BB" bpmnElement="_C43B8EB3-3718-400B-A395-88C17327FEE1">
-        <dc:Bounds x="160" y="480" width="60" height="60" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_9CB040F4-C1BD-4710-821B-156CA8EA3E1A" bpmnElement="_ECF6C258-4594-4075-8F7D-E87BADAC49D0">
-        <dc:Bounds x="60" y="480" width="60" height="60" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="_83A22868-88F8-43B2-9792-9BC4622F7167" bpmnElement="_5341E986-8044-4742-8D83-3EB97DB3918D">
-        <dc:Bounds x="20" y="420" width="60" height="60" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Edge_Flow_Start_ValidateCart" bpmnElement="Flow_Start_ValidateCart">
         <di:waypoint x="136" y="318" />

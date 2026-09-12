@@ -29,7 +29,7 @@ public class CheckoutProcessTest {
           .contentType(ContentType.JSON)
           .body(payload)
         .when()
-          .post("/Process_Checkout/create")
+          .post("/Process_Checkout")
         .then()
           .statusCode(201)
           .body("id", notNullValue());
