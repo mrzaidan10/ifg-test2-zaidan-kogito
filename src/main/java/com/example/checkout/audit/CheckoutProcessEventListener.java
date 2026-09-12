@@ -1,14 +1,12 @@
 package com.example.checkout.audit;
 
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.inject.Produces;
 import jakarta.inject.Inject;
 
 import org.kie.api.event.process.ProcessCompletedEvent;
 import org.kie.api.event.process.ProcessStartedEvent;
 import org.kie.kogito.internal.process.event.KogitoProcessEventListener;
 import org.kie.kogito.internal.process.runtime.KogitoProcessInstance;
-import org.kie.kogito.process.impl.DefaultProcessEventListenerConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,11 +18,8 @@ import java.util.Map;
  * Captures process lifecycle events for the Checkout process and records them
  * into {@link CheckoutAuditStore}.
  *
- * <p>Registration: Kogito picks up any CDI bean that implements
- * {@link KogitoProcessEventListener} automatically — no extra wiring needed. The
- * {@link #config()} producer exists only to guarantee the listener is created
- * eagerly at startup (otherwise it would be lazily instantiated on the first
- * event, which still works, but eager is clearer for educational purposes).
+ * <p>Registration: Kogito auto-discovers any CDI bean that implements
+ * {@link KogitoProcessEventListener} — no extra wiring needed.
  */
 @ApplicationScoped
 public class CheckoutProcessEventListener implements KogitoProcessEventListener {
@@ -33,16 +28,6 @@ public class CheckoutProcessEventListener implements KogitoProcessEventListener 
 
     @Inject
     CheckoutAuditStore store;
-
-    /**
-     * Produce a {@link DefaultProcessEventListenerConfig} that wires this
-     * listener into the Kogito runtime. The config is a CDI bean, so Quarkus
-     * will instantiate it and the listener at startup.
-     */
-    @Produces
-    public DefaultProcessEventListenerConfig config() {
-        return new DefaultProcessEventListenerConfig(this);
-    }
 
     @Override
     public void beforeProcessStarted(ProcessStartedEvent event) {
@@ -53,12 +38,12 @@ public class CheckoutProcessEventListener implements KogitoProcessEventListener 
 
     @Override
     public void afterProcessStarted(ProcessStartedEvent event) {
-        // no-op — we already captured everything in beforeProcessStarted
+        // no-op
     }
 
     @Override
     public void beforeProcessCompleted(ProcessCompletedEvent event) {
-        // no-op — variables are still intact in afterProcessCompleted
+        // no-op
     }
 
     @Override
